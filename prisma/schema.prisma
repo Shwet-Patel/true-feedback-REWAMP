@@ -7,7 +7,41 @@ datasource db {
   provider = "postgresql"
 }
 
-model test {
-  id   Int     @id @default(autoincrement())
-  name String? @db.VarChar
+model user {
+  user_id               Int       @id @default(autoincrement())
+  username              String    @unique @db.VarChar(255)
+  email                 String    @unique @db.VarChar(255)
+  passwod               String    @db.VarChar(2000)
+  is_accepting_messages Boolean?  @default(true)
+  is_verified           Boolean?  @default(false)
+  otp                   String?   @db.VarChar(10)
+  otp_expiration_time   DateTime? @db.Timestamp(6)
+  created_dtm           DateTime? @default(now()) @db.Timestamp(6)
+  updated_dtm           DateTime? @default(now()) @db.Timestamp(6)
+  message               message[]
+  poll                  poll[]
+}
+
+model message {
+  message_id  Int       @id @default(autoincrement())
+  content     String
+  to_user_id  Int
+  created_dtm DateTime? @default(now()) @db.Timestamp(6)
+  user        user      @relation(fields: [to_user_id], references: [user_id], onDelete: Cascade, map: "fk_to_user_id")
+}
+
+model poll {
+  poll_id          Int       @id @default(autoincrement())
+  poll_name        String?   @db.VarChar(2000)
+  poll_start_dtm   DateTime  @db.Timestamp(6)
+  poll_end_dtm     DateTime  @db.Timestamp(6)
+  poll_title       String?   @db.VarChar(2000)
+  poll_description String?
+  vote_count       Int?      @default(0)
+  is_result_public Boolean?  @default(false)
+  cteated_dtm      DateTime? @default(now()) @db.Timestamp(6)
+  updated_dtm      DateTime? @default(now()) @db.Timestamp(6)
+  candidates       Json?
+  created_by       Int
+  user             user      @relation(fields: [created_by], references: [user_id], onDelete: Cascade, map: "fk_on_created_by")
 }

@@ -1,9 +1,11 @@
-import { prisma } from "@/db/prisma";
 import { Request, Response, NextFunction } from "express";
 
 
-const loginHandler = (req: Request, res: Response, next: NextFunction) => {
-  
+const loginHandler = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+  } catch (error) {
+    next(error);
+  }
 };
 
 const logoutHandler = (req: Request, res: Response, next: NextFunction) => { };

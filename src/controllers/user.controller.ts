@@ -1,13 +1,33 @@
 import { Request, Response, NextFunction } from "express";
+import userService from "@/services/user.service";
 
-const registerUserHandler = (req: Request, res: Response, next: NextFunction) => { };
+const registerUserHandler = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  const userData = req.body;
 
-const getAcceptMessageStatusHandler = (req: Request, res: Response, next: NextFunction) => { };
+  const newUser = await userService.registerUserService(userData);
+  return res.success(newUser, "User registered successfully");
+};
 
-const getUserDetailsHandler = (req: Request, res: Response, next: NextFunction) => { }; 
+const getAcceptMessageStatusHandler = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+    
+};
+
+const getUserDetailsHandler = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {};
 
 export default {
-    registerUserHandler,
-    getAcceptMessageStatusHandler,
-    getUserDetailsHandler
+  registerUserHandler,
+  getAcceptMessageStatusHandler,
+  getUserDetailsHandler,
 };
