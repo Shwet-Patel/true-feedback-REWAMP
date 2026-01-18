@@ -1,24 +1,51 @@
 import { Request, Response, NextFunction } from "express";
 
-
-const loginHandler = async (req: Request, res: Response, next: NextFunction) => {
+const loginHandler = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
   try {
   } catch (error) {
     next(error);
   }
 };
 
-const logoutHandler = (req: Request, res: Response, next: NextFunction) => { };
+const logoutHandler = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {};
 
-const refreshTokenHandler = (req: Request, res: Response, next: NextFunction) => { };
+const refreshTokenHandler = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {};
 
-const forgotPasswordHandler = (req: Request, res: Response, next: NextFunction) => { };
+const forgotPasswordHandler = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {};
 
-const resetPasswordHandler = (req: Request, res: Response, next: NextFunction) => { };
+const resetPasswordHandler = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {};
 
-const resendOtpHandler = (req: Request, res: Response, next: NextFunction) => { };
+const resendOtpHandler = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {};
 
-const checkUsernameAvailabilityHandler = (req: Request, res: Response, next: NextFunction) => { };
+const checkUsernameAvailabilityHandler = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {};
 
 export default {
   loginHandler,
@@ -27,5 +54,5 @@ export default {
   forgotPasswordHandler,
   resetPasswordHandler,
   resendOtpHandler,
-  checkUsernameAvailabilityHandler
+  checkUsernameAvailabilityHandler,
 };

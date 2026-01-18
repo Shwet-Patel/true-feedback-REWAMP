@@ -1,17 +1,18 @@
 import { Router } from "express";
 import pollsController from "@/controllers/polls.controller";
+import { asyncHandler } from "@/utils/asyncHandler.utility";
 
 const router = Router();
 
-router.post('/', pollsController.createPollHandler);
-router.get('/:id', pollsController.getAllPollsHandler);
-router.get('/all', pollsController.getAllPollsHandler);
-router.put('/:id', pollsController.updatePollDetailsHandler);
-router.patch('/:id', pollsController.updatePollResultStatusHandler);
-router.delete('/:id', pollsController.deletePollHandler);
+router.post('/', asyncHandler(pollsController.createPollHandler));
+router.get('/:id', asyncHandler(pollsController.getAllPollsHandler));
+router.get('/all', asyncHandler(pollsController.getAllPollsHandler));
+router.put('/:id', asyncHandler(pollsController.updatePollDetailsHandler));
+router.patch('/:id', asyncHandler(pollsController.updatePollResultStatusHandler));
+router.delete('/:id', asyncHandler(pollsController.deletePollHandler));
 
 
-router.post('/:id/vote', pollsController.addVoteHandler);
-router.get('/:id/results', pollsController.getResultsHandler);
+router.post('/:id/vote', asyncHandler(pollsController.addVoteHandler));
+router.get('/:id/results', asyncHandler(pollsController.getResultsHandler));
 
 export default router;

@@ -1,14 +1,15 @@
 import { Router } from "express";
 import authController from "@/controllers/auth.controller";
+import { asyncHandler } from "@/utils/asyncHandler.utility";
 
 const router = Router();
 
-router.post('/login', authController.loginHandler);
-router.post('/refresh-token', authController.refreshTokenHandler);
-router.post('/forgot-password', authController.forgotPasswordHandler);
-router.post('/reset-password', authController.resetPasswordHandler);
-router.post('/resend-otp', authController.resendOtpHandler);
-router.post('/logout', authController.logoutHandler);
-router.get('/check-username',authController.checkUsernameAvailabilityHandler);
+router.post('/login', asyncHandler(authController.loginHandler));
+router.post('/refresh-token', asyncHandler(authController.refreshTokenHandler));
+router.post('/forgot-password', asyncHandler(authController.forgotPasswordHandler));
+router.post('/reset-password', asyncHandler(authController.resetPasswordHandler));
+router.post('/resend-otp', asyncHandler(authController.resendOtpHandler));
+router.post('/logout', asyncHandler(authController.logoutHandler));
+router.get('/check-username',asyncHandler(authController.checkUsernameAvailabilityHandler));
 
 export default router;

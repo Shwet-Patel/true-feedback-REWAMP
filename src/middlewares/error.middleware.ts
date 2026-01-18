@@ -6,6 +6,7 @@ export const errorMiddleware = (err: unknown, _req: Request, res: Response, _nex
         res.error(err.message, err.statusCode, err.details);
     }
 
+    // more to add if you wish to
 
     console.error('Unexpected Error: ', err);
     return res.error('Internal Server Error', 500);
