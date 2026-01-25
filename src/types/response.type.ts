@@ -4,6 +4,8 @@ export interface Meta {
   totalPages: number;
   totalItems: number;
   itemsPerPage: number;
+  hasNextPage: boolean;
+  hasPreviousPage: boolean;
 }
 
 // Success response type

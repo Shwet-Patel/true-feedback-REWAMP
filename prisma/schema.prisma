@@ -11,7 +11,7 @@ model user {
   user_id               Int       @id @default(autoincrement())
   username              String    @unique @db.VarChar(255)
   email                 String    @unique @db.VarChar(255)
-  passwod               String    @db.VarChar(2000)
+  password              String    @db.VarChar(2000)
   is_accepting_messages Boolean?  @default(true)
   is_verified           Boolean?  @default(false)
   otp                   String?   @db.VarChar(10)
@@ -39,7 +39,7 @@ model poll {
   poll_description String?
   vote_count       Int?      @default(0)
   is_result_public Boolean?  @default(false)
-  cteated_dtm      DateTime? @default(now()) @db.Timestamp(6)
+  created_dtm      DateTime? @default(now()) @db.Timestamp(6)
   updated_dtm      DateTime? @default(now()) @db.Timestamp(6)
   candidates       Json?
   created_by       Int

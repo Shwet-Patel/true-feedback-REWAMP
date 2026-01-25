@@ -2,6 +2,15 @@ import type { Meta } from '@/types/response.type';
 
 declare global {
   namespace Express {
+
+    interface Request {
+      user?: {
+        userId: string;
+        username: string;
+        email: string;
+      }
+    }
+
     interface Response {
       success<T>(
         data: T,
