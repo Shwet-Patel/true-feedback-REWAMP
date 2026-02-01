@@ -1,14 +1,14 @@
 import { prisma } from "@/db/prisma";
 import { email } from "zod";
 
-export const findUserByUsernameOrEmail = async (identifier: string) => { 
+export const findUserByUsernameOrEmail = async (identifier: string, isVerified: boolean = true) => { 
     return await prisma.user.findFirst({
         where: {
             OR: [
                 { username: identifier },
                 { email: identifier }
             ],
-            is_verified: true
+            is_verified: isVerified
         }
     });
 };

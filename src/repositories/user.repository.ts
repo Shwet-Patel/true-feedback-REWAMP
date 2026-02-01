@@ -3,7 +3,7 @@ import { prisma } from "@/db/prisma";
 import { UserRegistrationData } from "@/validations/user.validation";
 
 export const findUserByUsername = async (username: string) => {
-  return prisma.user.findUnique({
+  return prisma.user.findFirst({
     where: {
       username,
       is_verified: true,
@@ -54,6 +54,28 @@ export const registerUserInDB = async (
       is_verified: false,
       created_dtm: currentTime,
       updated_dtm: currentTime,
+    }
+  });
+};
+
+
+export const toggleAcceptMessagesStatus = async (userId: string, is_accepting_messages: boolean) => {
+  
+  const currentTimestamp = new Date();
+  return await prisma.user.update({
+    where: {
+      user_id: Number(userId),
+      is_verified: true,
+    }, 
+    data: {
+      is_accepting_messages: is_accepting_messages,
+      updated_dtm : currentTimestamp
+    },
+    select: {
+      user_id: true,
+      username: true,
+      email : true,
+      is_accepting_messages : true,
     }
   });
 };

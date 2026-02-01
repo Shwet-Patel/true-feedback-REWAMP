@@ -1,4 +1,5 @@
 import { JWT_SECRET } from '@/configs/env-config';
+import { AppEror } from '@/errors/app.error';
 import jwt from 'jsonwebtoken';
 
 export const generateToken = (payload: object, options?: jwt.SignOptions) => {
@@ -12,10 +13,10 @@ export const verifyToken = (token: string) => {
         return decoded as jwt.JwtPayload;
     } catch (error) {
         if (error instanceof jwt.TokenExpiredError) {
-            throw new Error('Token has expired. please login again.');
+            throw new AppEror('Token has expired', 401);
         }
 
         // typical error
-        throw new Error('Invalid token');
+        throw new AppEror('Invalid token', 401);
     }
 };

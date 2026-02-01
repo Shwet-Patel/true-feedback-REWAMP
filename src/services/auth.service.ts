@@ -104,23 +104,23 @@ const resetPasswordService = async (data: ResetPasswordData) => {
 
   // step 1 : validate the token.
   const decoded = verifyToken(token);
-  if (!decoded) {
-    throw new AppEror('invalid token', 400);
-  }
 
   //step 2 : hash the password.
   const newPasswordHash = await bcrypt.hash(newPassword, 10);
 
   //step 3 : save it.
   const result = await updatePassword(decoded.userId, newPasswordHash);
-  return result;
+  
+  //step 4: return user without password
+  const { password: _password, ...userWithoutPassword } = result;
+  return userWithoutPassword;
 }
 
 const verifyOtpService = async (data: verifyOtpData) => {
   const { identifier, otp } = data;
   
   // step 1: find user by username or email
-  const user = await findUserByUsernameOrEmail(identifier);
+  const user = await findUserByUsernameOrEmail(identifier,false);
   if (!user) {
     throw new AppEror("User not found", 404);
   }
@@ -132,7 +132,10 @@ const verifyOtpService = async (data: verifyOtpData) => {
 
   // step 3: set isVerified to true
   const result = await updateIsVerified(user.user_id, true);
-  return result;
+  
+  //step 4: return user without password
+  const { password: _password, ...userWithoutPassword } = result;
+  return userWithoutPassword;
 }
 
 export default {

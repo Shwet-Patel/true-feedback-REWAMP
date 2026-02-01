@@ -3,6 +3,7 @@ import {
   findUserByEmail,
   findUserByUsername,
   registerUserInDB,
+  toggleAcceptMessagesStatus,
 } from "@/repositories/user.repository";
 import { prismaErrorHandler } from "@/utils/prismaErrorHandler.utility";
 import bcrypt from "bcryptjs";
@@ -37,7 +38,8 @@ const registerUserService = async (userData: UserRegistrationData) => {
     await sendVerificationEmail(registeredUser.username , registeredUser.email, otp);
 
     // 6. return success response
-    return registeredUser;
+    const { password : _password, ...userWithoutPassword } = registeredUser;
+    return userWithoutPassword;
   } catch (error) {
     prismaErrorHandler(error);
   }
@@ -61,7 +63,8 @@ const getUserDetailsService = async (username: string) => {
     if (!user) {
       throw new AppEror("User not found", 404);
     }
-    return user;
+    const { password : _password, ...userWithoutPassword } = user;
+    return userWithoutPassword;
   } catch (error) {
     prismaErrorHandler(error);
   }
@@ -72,10 +75,20 @@ const checkUsernameAvailabilityService = async (username: string) => {
   return !user;
 };
 
+export const toggleAcceptMessagesStatusService = async (userId: string, is_accepting_messages: boolean) => {
+  try {
+    const result = await toggleAcceptMessagesStatus(userId, is_accepting_messages);
+    return result;
+  } catch (error) {
+    prismaErrorHandler(error);
+  };
+};
+
 
 export default {
   registerUserService,
   getAcceptMessageStatusService,
   getUserDetailsService,
-  checkUsernameAvailabilityService
+  checkUsernameAvailabilityService,
+  toggleAcceptMessagesStatusService
 };

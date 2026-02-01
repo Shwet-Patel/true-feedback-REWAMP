@@ -1,6 +1,6 @@
 import messageService from "@/services/message.service";
 import { messageIdData, sendMessageData } from "@/validations/message.validation";
-import { PaginationData } from "@/validations/shared.validation";
+import { PaginationData, paginationSchema } from "@/validations/shared.validation";
 import { Request, Response } from "express";
 
 const sendMessageHandler = async (
@@ -21,9 +21,13 @@ const getMessagesHandler = async (
     return res.forbidden('User not authenticated');
   }
 
-  const Data = req.query as unknown as PaginationData;
+  //validate query params
+  const data = paginationSchema.parse(req.query);
+  if (!data) {
+    return res.badRequest('Invalid query parameters');
+  }
 
-  const result = await messageService.getMessagesService(userId, Data);
+  const result = await messageService.getMessagesService(userId, data);
   res.success(result.data, 'Messages retrieved successfully',result.meta);
 
 };

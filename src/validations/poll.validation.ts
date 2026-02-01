@@ -22,7 +22,12 @@ export const toggleResultStatusSchema = z.object({
   is_result_public : z.boolean(),
 });
 
+export const voteSchema = z.object({
+  candidate: z.string()
+});
+
 //types
+export type voteData = z.infer<typeof voteSchema>;
 export type pollIdData = z.infer<typeof pollIdSchema>;
 export type createPollData = z.infer<typeof createPollSchema>;
 export type toggleResultStatusData = z.infer<typeof toggleResultStatusSchema>;
