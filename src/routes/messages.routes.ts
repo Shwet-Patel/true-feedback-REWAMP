@@ -104,7 +104,7 @@ router.get('/message-suggestions', asyncHandler(messagesController.getMessageSug
  *           application/json:
  *             schema: { $ref: "#/components/schemas/ErrorResponse" }
  */
-router.get("/", authenticate, asyncHandler(messagesController.getMessagesHandler));
+router.get("/", authenticate, validate(paginationSchema, 'query'), asyncHandler(messagesController.getMessagesHandler));
 
 /**
  * @openapi

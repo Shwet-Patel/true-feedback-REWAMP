@@ -128,7 +128,7 @@ const getResults = async (pollId: number) => {
   // step 2 : check if poll is still going on
   const currentTimestamp = new Date();
   if (currentTimestamp < poll.poll_end_dtm) {
-    throw new AppEror("poll has ended.", 409);
+    throw new AppEror("poll has not ended yet.", 409);
   }
 
   // step 3 : check if the results are public
@@ -137,7 +137,7 @@ const getResults = async (pollId: number) => {
   }
 
   if (!poll.candidates) {
-      throw new AppEror("internal server error", 500);
+    throw new AppEror("internal server error", 500);
   }
 
 

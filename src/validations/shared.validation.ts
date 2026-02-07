@@ -5,8 +5,8 @@ export const userNameSchema = z.object({
 });
 
 export const paginationSchema = z.object({
-    page: z.coerce.number().default(1),
-    limit: z.coerce.number().default(10),
+    page: z.coerce.number().positive("Page must be a positive number").default(1),
+    limit: z.coerce.number().positive("Limit must be a positive number").default(10),
 });
 
 //types

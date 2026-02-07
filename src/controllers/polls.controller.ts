@@ -26,7 +26,7 @@ const getAllPollsHandler = async (req: Request, res: Response) => {
     return res.forbidden("authentication required");
   }
 
-  const paginationdata = req.query as unknown as PaginationData;
+  const paginationdata = req.validatedQuery as PaginationData;
   const result = await pollService.getAllPollsService(paginationdata, userId);
   return res.success(
     result.data,
@@ -88,7 +88,7 @@ const addVoteHandler = async (req: Request, res: Response) => {
   // check if the cookie exists
   if (req.cookies?.[`voted_for_${id}`]) {
     console.log("caught ya!");
-    res.success(null, "vote registered succesfully");
+    return res.success(null, "vote registered succesfully");
   }
 
   const result = await pollService.addVoteService(id, candidate);
@@ -101,7 +101,7 @@ const addVoteHandler = async (req: Request, res: Response) => {
     maxAge: 365 * 24 * 60 * 60 * 1000, // 1 year (surely no poll lasts longer then this)
   });
 
-  res.success(null, "vote registered succesfully");
+  return res.success(null, "vote registered succesfully");
 };
 
 const getResultsHandler = async (req: Request, res: Response) => {

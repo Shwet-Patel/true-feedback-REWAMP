@@ -34,12 +34,9 @@ export const validate =
           req.body = parsedData;
           break;
         case "query":
-          // req.query can be modified by setting properties directly
-          // Assign each property from parsedData to req.query
-          const parsedQuery = parsedData as Record<string, any>;
-          Object.keys(parsedQuery).forEach((key) => {
-            (req.query)[key] = parsedQuery[key];
-          });
+          // since req.query is a getter, we can't assign to it directly
+          // so setting it into the validated query object
+          req.validatedQuery = parsedData as Record<string, any>;
           break;
         case "params":
           req.params = parsedData as typeof req.params;

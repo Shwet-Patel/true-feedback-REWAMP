@@ -9,6 +9,7 @@ declare global {
         username: string;
         email: string;
       }
+      validatedQuery?: Record<string, any>;
     }
 
     interface Response {

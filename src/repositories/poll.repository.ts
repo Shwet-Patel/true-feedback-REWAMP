@@ -1,4 +1,5 @@
 import { prisma } from "@/db/prisma";
+import { AppEror } from "@/errors/app.error";
 import { createPollData } from "@/validations/poll.validation";
 import {
   PaginationData,
@@ -25,11 +26,17 @@ export const createPoll = async (data: createPollData, userId: string) => {
 };
 
 export const getPollById = async (pollId: number) => {
-  return await prisma.poll.findFirst({
+  const poll = await prisma.poll.findFirst({
     where: {
       poll_id: pollId,
     },
   });
+
+  if (!poll) {
+    throw new AppEror("poll not found", 404);
+  }
+
+  return poll;
 };
 
 export const getPolls = async (
@@ -121,6 +128,6 @@ export const addVote = async (pollId: number, candidate: string) => {
     false
   ),
   vote_count = vote_count + 1
-  WHERE id = ${pollId};
+  WHERE poll_id = ${pollId};
   `;
 };

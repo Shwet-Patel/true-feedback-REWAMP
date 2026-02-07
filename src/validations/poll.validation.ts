@@ -10,16 +10,16 @@ export const createPollSchema = z
     is_result_public: z.boolean().default(false),
     candidates: z.record(z.string(), z.literal(0)),
   })
-  .refine((data) => {
-    data.poll_start_dtm < data.poll_end_dtm;
-  }, 'poll start date should be less then end date');
+  .refine((data) =>
+    new Date(data.poll_start_dtm).getTime() < new Date(data.poll_end_dtm).getTime()
+    , { error: 'poll start date should be less then end date' });
 
 export const pollIdSchema = z.object({
-  id : z.coerce.number().positive()
+  id: z.coerce.number().positive()
 });
 
 export const toggleResultStatusSchema = z.object({
-  is_result_public : z.boolean(),
+  is_result_public: z.boolean(),
 });
 
 export const voteSchema = z.object({

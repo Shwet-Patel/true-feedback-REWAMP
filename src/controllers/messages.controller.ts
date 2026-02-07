@@ -21,12 +21,7 @@ const getMessagesHandler = async (
     return res.forbidden('User not authenticated');
   }
 
-  //validate query params
-  const data = paginationSchema.parse(req.query);
-  if (!data) {
-    return res.badRequest('Invalid query parameters');
-  }
-
+  const data = req.validatedQuery as PaginationData;
   const result = await messageService.getMessagesService(userId, data);
   res.success(result.data, 'Messages retrieved successfully',result.meta);
 
